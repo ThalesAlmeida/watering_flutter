@@ -28,7 +28,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Contatos"),
+        title: Text("Propriedade"),
         backgroundColor: Colors.deepPurple,
         centerTitle: true,
         actions: <Widget>[
@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           onPressed: () {
                             Navigator.pop(context);
-                            _showContactPage(contact: propriety[index]);
+                            _showContactPage(propriety: propriety[index]);
                           },
                         ),
 
@@ -171,15 +171,15 @@ class _HomePageState extends State<HomePage> {
         });
   }
 
-  void _showContactPage({Propriety contact}) async {
+  void _showContactPage({Propriety propriety}) async {
     final recContact = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProprietyPage(
-              propriety: contact,
+              propriety: propriety,
             )));
     if (recContact != null) {
-      if (contact != null) {
+      if (propriety != null) {
         await helper.updatePropriety(recContact);
         _getAllPropriety();
       } else {

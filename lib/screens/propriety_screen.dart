@@ -31,6 +31,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
     if(widget.propriety == null){
       _editedPropriety = Propriety();
     }else{
+      _editedPropriety = Propriety.fromMap((widget.propriety.toMap()));
       _nomeController.text = _editedPropriety.name;
       _latitudeController.text = _editedPropriety.latitude;
       _sandController.text = _editedPropriety.sand;
@@ -41,7 +42,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Sua irrigação"),
+        title: Text(_editedPropriety.name ?? "Nova Propriedade"),
         centerTitle: true,
       ),
       floatingActionButton: FloatingActionButton(
@@ -71,22 +72,20 @@ class _ProprietyPageState extends State<ProprietyPage> {
                   },
                 ),
                 TextField(
+                  controller: _latitudeController,
                   decoration: InputDecoration(labelText: "Latitude"),
                   onChanged: (text){
                     _userEdited = true;
-                    setState(() {
-                      _editedPropriety.latitude = text;
-                    });
+                    _editedPropriety.latitude = text;
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                 ),
                 TextField(
+                  controller: _sandController,
                   decoration: InputDecoration(labelText: "Nível de areia"),
                   onChanged: (text){
                     _userEdited = true;
-                    setState(() {
-                      _editedPropriety.sand = text;
-                    });
+                    _editedPropriety.sand = text;
                   },
                   keyboardType: TextInputType.numberWithOptions(),
                 ),
@@ -95,5 +94,9 @@ class _ProprietyPageState extends State<ProprietyPage> {
           )
       ),
     );
+  }
+
+  _requestPop(){
+
   }
 }
