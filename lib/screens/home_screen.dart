@@ -27,7 +27,23 @@ class _HomePageState extends State<HomePage> {
                   return new ProprietyPage();
                 }));
               },
-            )
+            ),
+            RaisedButton(
+              child: Text("Cadastrar Cultivo"),
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+                  return new ProprietyPage();
+                }));
+              },
+            ),
+            RaisedButton(
+              child: Text("Começar a irrigação"),
+              onPressed: () {
+                Navigator.of(context).push(new MaterialPageRoute(builder: (context){
+                  return new ProprietyPage();
+                }));
+              },
+            ),
           ],
         ),
       ),

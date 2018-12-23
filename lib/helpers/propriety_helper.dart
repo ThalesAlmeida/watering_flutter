@@ -7,6 +7,14 @@ final String nameColumn = "nameColumn";
 final String latitudeColumn = "latitudeColumn";
 final String sandColumn = "sandColumn";
 
+final String farmingTable = "farmingTable";
+final String idFarmingColumn = "idFarmingColumn";
+final String q0Column = "q0Column";
+final String tempMaximaColumn = "tempMaximaColumn";
+final String tempMinimaColumn = "tempMinimaColumn";
+final String kcColumn = "kcColumn";
+final String zColumn = "zColumn";
+
 class ProprietyHelper {
   static final ProprietyHelper _instance = ProprietyHelper.internal();
 
@@ -29,12 +37,11 @@ class ProprietyHelper {
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'propriety.db');
 
-    return await openDatabase(
-        path, version: 1, onCreate: (Database db, int newerVersion) async {
+    return await openDatabase(path, version: 1,
+        onCreate: (Database db, int newerVersion) async {
       await db.execute(
           "CREATE TABLE $proprietyTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $latitudeColumn TEXT,"
-              "$sandColumn TEXT)"
-      );
+          "$sandColumn TEXT)");
     });
   }
 
@@ -60,15 +67,14 @@ class ProprietyHelper {
 
   Future<int> deletePropriety(int id) async {
     Database dbPropriety = await db;
-    return await dbPropriety.delete(
-        proprietyTable, where: "$idColumn = ?", whereArgs: [id]);
+    return await dbPropriety
+        .delete(proprietyTable, where: "$idColumn = ?", whereArgs: [id]);
   }
 
   Future<int> updatePropriety(Propriety propriety) async {
     Database dbPropriety = await db;
-    return await dbPropriety.update(
-        proprietyTable, propriety.toMap(), where: "$idColumn = ?",
-        whereArgs: [propriety.id]);
+    return await dbPropriety.update(proprietyTable, propriety.toMap(),
+        where: "$idColumn = ?", whereArgs: [propriety.id]);
   }
 
   Future<List> getAllPropriety() async {
@@ -91,11 +97,9 @@ class ProprietyHelper {
     Database dbPropriety = await db;
     dbPropriety.close();
   }
-
 }
 
 class Propriety {
-
   int id;
   String name;
   String latitude;
@@ -103,7 +107,7 @@ class Propriety {
 
   Propriety();
 
-  Propriety.fromMap(Map map){
+  Propriety.fromMap(Map map) {
     id = map[idColumn];
     name = map[nameColumn];
     latitude = map[latitudeColumn];
@@ -128,6 +132,47 @@ class Propriety {
     // TODO: implement toString
     return "Propriedade(id: $id, name: $name, latitude: $latitude, sand: $sand)";
   }
+}
+
+class Farming {
+  int id;
+  String q0;
+  String tempMaxima;
+  String tempMinima;
+  String kc;
+  String z;
+
+  Farming();
+
+  Farming.fromMap(Map map){
+    id = map[idFarmingColumn];
+    q0 = map[q0Column];
+    tempMaxima = map[tempMaximaColumn];
+    tempMinima = map[tempMinimaColumn];
+    kc = map[kcColumn];
+    z = map[zColumn];
+  }
+
+  Map toMap(){
+    Map<String, dynamic> map = {
+      q0Column: q0,
+      tempMaximaColumn: tempMaxima,
+      tempMinimaColumn: tempMinima,
+      kcColumn: kc,
+      zColumn: z,
+    };
+
+    if (id != null) {
+      map[idColumn] = id;
+    }
+    return map;
+}
+  @override
+  String toString() {
+    // TODO: implement toString
+    return "Propriedade(id: $id, q0: $q0, tempMaxima: $tempMaxima, tempMinima: $tempMinima, kc: $kc, z: $z)";
+  }
+
 }
 
 //Mudar nome da sua tabela e os campos
