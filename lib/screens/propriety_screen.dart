@@ -15,6 +15,8 @@ class ProprietyPage extends StatefulWidget {
 
 class _ProprietyPageState extends State<ProprietyPage> {
 
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   final _nomeController = TextEditingController();
   final _latitudeController = TextEditingController();
   final _sandController = TextEditingController();
@@ -43,6 +45,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
     return WillPopScope(
       onWillPop: _requestPop,
       child: Scaffold(
+        key: _scaffoldKey,
         appBar: AppBar(
           title: Text(_editedPropriety.name ?? "Nova Propriedade"),
           centerTitle: true,
@@ -50,9 +53,15 @@ class _ProprietyPageState extends State<ProprietyPage> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (_editedPropriety.name != null &&
-                _editedPropriety.name.isNotEmpty) {
+                _editedPropriety.name.isNotEmpty && _editedPropriety.latitude.isNotEmpty && _editedPropriety.sand.isNotEmpty) {
               Navigator.pop(context, _editedPropriety);
             } else {
+              _scaffoldKey.currentState..showSnackBar(
+                  SnackBar(content: Text("É necessário o preenchimento de todos os campos"),
+                    backgroundColor: Theme.of(context).primaryColor,
+                    duration: Duration(seconds: 2),
+                  )
+              );
               FocusScope.of(context).requestFocus(_nameFocus);
             }
           },
@@ -101,6 +110,10 @@ class _ProprietyPageState extends State<ProprietyPage> {
     );
   }
 
+
+  
+
+
   Future<bool> _requestPop() {
     if (_userEdited) {
       showDialog(context: context,
@@ -132,3 +145,5 @@ class _ProprietyPageState extends State<ProprietyPage> {
     }
   }
 }
+
+
