@@ -10,6 +10,36 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  ProprietyHelper helper = ProprietyHelper();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    Propriety p = Propriety();
+    p.name = "daniel";
+    p.latitude = "20";
+    p.sand = "1.4";
+    p.q0 = "15";
+    p.cra = "10";
+    p.cta = "45";
+    p.intensidade = "12";
+    p.eficiencia = "120";
+    p.f = "17";
+    p.z = "13";
+    p.tempMinima = "002";
+    p.tempMaxima = "001";
+    p.kc = "46";
+
+    helper.savePropriety(p);
+
+    helper.getAllPropriety().then((list){
+      print(list);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

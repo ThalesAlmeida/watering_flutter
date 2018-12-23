@@ -6,14 +6,20 @@ final String idColumn = "idColumn";
 final String nameColumn = "nameColumn";
 final String latitudeColumn = "latitudeColumn";
 final String sandColumn = "sandColumn";
+final String ctaColumn = "ctaColumn";
+final String craColumn = "craColumn";
+final String fColumn = "fColumn";
 
-final String farmingTable = "farmingTable";
-final String idFarmingColumn = "idFarmingColumn";
+//Cultivo
 final String q0Column = "q0Column";
 final String tempMaximaColumn = "tempMaximaColumn";
 final String tempMinimaColumn = "tempMinimaColumn";
 final String kcColumn = "kcColumn";
 final String zColumn = "zColumn";
+
+//Equipamento
+final String eficienciaColumn = "eficienciaColumn";
+final String intensidadeColumn = "intensidadeColumn";
 
 class ProprietyHelper {
   static final ProprietyHelper _instance = ProprietyHelper.internal();
@@ -35,13 +41,13 @@ class ProprietyHelper {
 
   Future<Database> initDb() async {
     final databasePath = await getDatabasesPath();
-    final path = join(databasePath, 'propriety.db');
+    final path = join(databasePath, 'farm.db');
 
     return await openDatabase(path, version: 1,
         onCreate: (Database db, int newerVersion) async {
       await db.execute(
           "CREATE TABLE $proprietyTable($idColumn INTEGER PRIMARY KEY, $nameColumn TEXT, $latitudeColumn TEXT,"
-          "$sandColumn TEXT)");
+          "$sandColumn TEXT, $ctaColumn TEXT, $craColumn TEXT, $fColumn TEXT, $q0Column TEXT, $tempMaximaColumn TEXT, $tempMinimaColumn TEXT, $kcColumn TEXT, $zColumn TEXT, $eficienciaColumn TEXT, $intensidadeColumn TEXT)");
     });
   }
 
@@ -54,7 +60,7 @@ class ProprietyHelper {
   Future<Propriety> getPropriety(int id) async {
     Database dbPropriety = await db;
     List<Map> maps = await dbPropriety.query(proprietyTable,
-        columns: [idColumn, nameColumn, latitudeColumn, sandColumn],
+        columns: [idColumn, nameColumn, latitudeColumn, sandColumn, ctaColumn, craColumn, fColumn, q0Column, tempMaximaColumn, tempMinimaColumn, kcColumn, zColumn, eficienciaColumn, intensidadeColumn],
         where: "$idColumn = ?",
         whereArgs: [id]);
 
@@ -100,10 +106,25 @@ class ProprietyHelper {
 }
 
 class Propriety {
+  //Propriedade
   int id;
   String name;
   String latitude;
   String sand;
+  String cta;
+  String cra;
+  String f;
+
+  //Cultivo
+  String q0;
+  String tempMaxima;
+  String tempMinima;
+  String kc;
+  String z;
+
+  //Equipamento
+  String eficiencia;
+  String intensidade;
 
   Propriety();
 
@@ -112,6 +133,16 @@ class Propriety {
     name = map[nameColumn];
     latitude = map[latitudeColumn];
     sand = map[sandColumn];
+    cta = map[ctaColumn];
+    cra = map[craColumn];
+    f = map[fColumn];
+    q0 = map[q0Column];
+    tempMaxima = map[tempMaximaColumn];
+    tempMinima = map[tempMinimaColumn];
+    kc = map[kcColumn];
+    z = map[zColumn];
+    eficiencia = map[eficienciaColumn];
+    intensidade = map[intensidadeColumn];
   }
 
   Map toMap() {
@@ -119,60 +150,30 @@ class Propriety {
       nameColumn: name,
       latitudeColumn: latitude,
       sandColumn: sand,
-    };
-
-    if (id != null) {
-      map[idColumn] = id;
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    // TODO: implement toString
-    return "Propriedade(id: $id, name: $name, latitude: $latitude, sand: $sand)";
-  }
-}
-
-class Farming {
-  int id;
-  String q0;
-  String tempMaxima;
-  String tempMinima;
-  String kc;
-  String z;
-
-  Farming();
-
-  Farming.fromMap(Map map){
-    id = map[idFarmingColumn];
-    q0 = map[q0Column];
-    tempMaxima = map[tempMaximaColumn];
-    tempMinima = map[tempMinimaColumn];
-    kc = map[kcColumn];
-    z = map[zColumn];
-  }
-
-  Map toMap(){
-    Map<String, dynamic> map = {
+      ctaColumn: cta,
+      craColumn: cra,
+      fColumn: f,
       q0Column: q0,
       tempMaximaColumn: tempMaxima,
       tempMinimaColumn: tempMinima,
       kcColumn: kc,
       zColumn: z,
+      eficienciaColumn: eficiencia,
+      intensidadeColumn: intensidade,
     };
 
     if (id != null) {
       map[idColumn] = id;
     }
     return map;
-}
+  }
+
   @override
   String toString() {
     // TODO: implement toString
-    return "Propriedade(id: $id, q0: $q0, tempMaxima: $tempMaxima, tempMinima: $tempMinima, kc: $kc, z: $z)";
+    return "Propriedade(id: $id, name: $name, latitude: $latitude, sand: $sand, cta: $cra, cra: $cra, f: $f q0: $q0, tempMaxima: $tempMaxima, tempMinima: $tempMinima, kc: $kc, z: $z, $eficiencia: eficiencia, $intensidade: intensidade)";
   }
-
 }
+
 
 //Mudar nome da sua tabela e os campos
