@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:watering_app/screens/home_screen.dart';
+import 'package:watering_app/screens/propriety_view_screen.dart';
 
 void main() => runApp(MyApp());
 

@@ -59,7 +59,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
               _scaffoldKey.currentState..showSnackBar(
                   SnackBar(content: Text("É necessário o preenchimento de todos os campos"),
                     backgroundColor: Theme.of(context).primaryColor,
-                    duration: Duration(seconds: 2),
+                    duration: Duration(seconds: 3),
                   )
               );
               FocusScope.of(context).requestFocus(_nameFocus);
@@ -109,9 +109,6 @@ class _ProprietyPageState extends State<ProprietyPage> {
       ),
     );
   }
-
-
-  
 
 
   Future<bool> _requestPop() {
