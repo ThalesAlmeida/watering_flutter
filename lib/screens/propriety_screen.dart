@@ -18,6 +18,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
   final _nomeController = TextEditingController();
+
   final _latitudeController = TextEditingController();
   final _sandController = TextEditingController();
 
@@ -89,7 +90,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
                     decoration: InputDecoration(labelText: "Latitude"),
                     onChanged: (text) {
                       _userEdited = true;
-                      _editedPropriety.latitude = text;
+
                     },
                     keyboardType: TextInputType.numberWithOptions(),
                   ),
@@ -98,7 +99,7 @@ class _ProprietyPageState extends State<ProprietyPage> {
                     decoration: InputDecoration(labelText: "Nível de areia"),
                     onChanged: (text) {
                       _userEdited = true;
-                      _editedPropriety.sand = text;
+
                     },
                     keyboardType: TextInputType.numberWithOptions(),
                   ),
